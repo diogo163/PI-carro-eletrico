@@ -1,13 +1,18 @@
 import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native'
-import React from 'react'
+import React,{ useState,useEffect } from 'react'
 import { themeColors } from '../theme'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import {ArrowLeftIcon} from 'react-native-heroicons/solid';
 import { useNavigation } from '@react-navigation/native';
-
+import SelectDropdown from 'react-native-select-dropdown';
+import axios from 'axios';
 
 export default function SignUpScreen() {
     const navigation = useNavigation();
+
+    const cars = ["A", "B", "C", "D","E"]
+
+
   return (
     <View className="flex-1 bg-white" style={{backgroundColor: themeColors.bg}}>
       <SafeAreaView className="flex">
@@ -44,6 +49,23 @@ export default function SignUpScreen() {
                 secureTextEntry
                 placeholder='Digite sua senha'
             />
+
+            <SelectDropdown
+                defaultButtonText = "Escolha o modelo"
+
+                data={cars}
+                onSelect={(selectedItem, index) => {
+                }}
+                buttonTextAfterSelection={(selectedItem, index) => {
+                    
+                    return selectedItem
+                }}
+                rowTextForSelection={(item, index) => {
+                    
+                    return item
+                }}
+            />
+
             <TouchableOpacity
                 className="py-3 bg-yellow-400 rounded-xl"
             >
