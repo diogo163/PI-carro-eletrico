@@ -1,16 +1,44 @@
-import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native'
+import { View, Text, TouchableOpacity, Image, TextInput, Keyboard } from 'react-native'
 import React,{ useState,useEffect } from 'react'
 import { themeColors } from '../theme'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import {ArrowLeftIcon} from 'react-native-heroicons/solid';
 import { useNavigation } from '@react-navigation/native';
 import SelectDropdown from 'react-native-select-dropdown';
-import axios from 'axios';
+import config from "../config/config.json";
 
 export default function SignUpScreen() {
     const navigation = useNavigation();
 
     const cars = ["A", "B", "C", "D","E"]
+
+    const [user,setUser]=useState(null);
+    const [RA,setRA]=useState(null);
+    const [password,setPassword]=useState(null);
+    const [placa,setPlaca]=useState(null);
+    const [modelo,setModelo]=useState(null);
+    const [message,setMessage]=useState(null);
+
+    //Envia os dados do formulario para o backend
+    async function registerUser()
+    {
+        let reqs = await fetch(config.urlRootNode+'create',{
+            method: 'POST',
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                RAuser: RA,
+                passwordUser: password,
+                placaUser: placa,
+                modeloUser: modelo
+            })
+        });
+        let ress= await reqs.json();
+        setMessage(ress);
+    }
+
 
 
   return (
@@ -33,41 +61,50 @@ export default function SignUpScreen() {
         style={{borderTopLeftRadius: 50, borderTopRightRadius: 50}}
       >
         <View className="form space-y-2">
+            {message && (
+                <text>{message}</text>
+            )}
+
             <Text className="text-gray-700 ml-4">RA</Text>
             <TextInput
                 className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"  
                 placeholder='Digite seu RA'
+                onChangeText={(text)=>setRA(text)}
             />
             <Text className="text-gray-700 ml-4">Placa do carro</Text>
             <TextInput
                 className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
                 placeholder='Digite a placa do seu carro'
+                onChangeText={(text)=>setPlaca(text)}
             />
             <Text className="text-gray-700 ml-4">Senha</Text>
             <TextInput
                 className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-7"
                 secureTextEntry
                 placeholder='Digite sua senha'
+                onChangeText={(text)=>setPassword(text)}
             />
 
             <SelectDropdown
                 defaultButtonText = "Escolha o modelo"
-
                 data={cars}
                 onSelect={(selectedItem, index) => {
+                    
                 }}
                 buttonTextAfterSelection={(selectedItem, index) => {
-                    
                     return selectedItem
                 }}
+                
                 rowTextForSelection={(item, index) => {
                     
                     return item
                 }}
+                onDropdownSelected={(selectedItem) => setModelo(selectedItem)}
             />
 
             <TouchableOpacity
                 className="py-3 bg-yellow-400 rounded-xl"
+                onPress={registerUser}
             >
                 <Text className="font-xl font-bold text-center text-gray-700">
                     Registre-se
