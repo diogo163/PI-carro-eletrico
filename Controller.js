@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const model=require('models');
+const model=require('C:/Users/Diogo/Desktop/PI-carro-eletrico/models');
 
 
 
@@ -30,7 +30,7 @@ app.post('/create',async(req,res)=>{
 
 
 //Start server
-let port=process.env.PORT || 3000;
+let port=process.env.PORT || 3003;
 app.listen(port,(req,res)=>{
     console.log('Servidor rodando')
 });
