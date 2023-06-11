@@ -5,40 +5,33 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import {ArrowLeftIcon} from 'react-native-heroicons/solid';
 import { useNavigation } from '@react-navigation/native';
 import SelectDropdown from 'react-native-select-dropdown';
-import config from "../config/config.json";
+// import config from "../config/config.json";
+import { getAuth, createUserWithEmailAndPassword} from 'firebase/auth'
 
 export default function SignUpScreen() {
     const navigation = useNavigation();
 
+    const auth = getAuth();
     const cars = ["A", "B", "C", "D","E"]
 
-    const [user,setUser]=useState(null);
-    const [RA,setRA]=useState(null);
-    const [password,setPassword]=useState(null);
-    const [placa,setPlaca]=useState(null);
-    const [modelo,setModelo]=useState(null);
-    const [message,setMessage]=useState(null);
+    const [email,setEmail]=useState('')
+    const [password,setPassword]=useState('')
+    const [placa,setPlaca]=useState('')
+    const [modelo,setModelo]=useState('')
+    const [validationMessage, setValidationMessage] = useState('') 
 
-    //Envia os dados do formulario para o backend
-    async function registerUser()
-    {
-        let reqs = await fetch(config.urlRootNode+'create',{
-            method: 'POST',
-            headers:{
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                RAuser: RA,
-                passwordUser: password,
-                placaUser: placa,
-                modeloUser: modelo
-            })
-        });
-        let ress= await reqs.json();
-        setMessage(ress);
-    }
-
+    
+    async function createAccount() {
+        email === '' || password === '' 
+        ? setValidationMessage('required filled missing')
+        : ''
+        try {
+          await createUserWithEmailAndPassword(auth, email, password);
+        //   navigation.navigate('Sign In');
+        } catch (error) {
+          setValidationMessage(error.message);
+        }
+      }
 
 
   return (
@@ -61,35 +54,34 @@ export default function SignUpScreen() {
         style={{borderTopLeftRadius: 50, borderTopRightRadius: 50}}
       >
         <View className="form space-y-2">
-            {message && (
-                <text>{message}</text>
-            )}
 
             <Text className="text-gray-700 ml-4">RA</Text>
             <TextInput
                 className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"  
-                placeholder='Digite seu RA'
-                onChangeText={(text)=>setRA(text)}
+                placeholder='Digite seu email da Mauá'
+                value={email}
+                onChangeText={text => setEmail(text)}
             />
             <Text className="text-gray-700 ml-4">Placa do carro</Text>
             <TextInput
                 className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
                 placeholder='Digite a placa do seu carro'
-                onChangeText={(text)=>setPlaca(text)}
+                value = {placa}
+                onChangeText={text => setPlaca(text)}
             />
             <Text className="text-gray-700 ml-4">Senha</Text>
             <TextInput
                 className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-7"
                 secureTextEntry
                 placeholder='Digite sua senha'
+                value = {password}
                 onChangeText={(text)=>setPassword(text)}
             />
 
             <SelectDropdown
                 defaultButtonText = "Escolha o modelo"
                 data={cars}
-                onSelect={(selectedItem, index) => {
-                    
+                onSelect={(selectedItem, index) => { 
                 }}
                 buttonTextAfterSelection={(selectedItem, index) => {
                     return selectedItem
@@ -99,12 +91,13 @@ export default function SignUpScreen() {
                     
                     return item
                 }}
-                onDropdownSelected={(selectedItem) => setModelo(selectedItem)}
+                onChangeText={(text)=>setModelo(selectedItem)}
+
             />
 
             <TouchableOpacity
                 className="py-3 bg-yellow-400 rounded-xl"
-                onPress={registerUser}
+                onPress={createAccount}
             >
                 <Text className="font-xl font-bold text-center text-gray-700">
                     Registre-se
@@ -113,7 +106,9 @@ export default function SignUpScreen() {
         </View>
         <View className="flex-row justify-center mt-7">
             <Text className="text-gray-500 font-semibold">Já tem uma conta?</Text>
-            <TouchableOpacity onPress={()=> navigation.navigate('Login')}>
+            <Text className="mt-2 text-red-500">{validationMessage}</Text>
+            <TouchableOpacity  onPress={()=> navigation.navigate('Login')}
+            >
                 <Text className="font-semibold text-yellow-500"> Login</Text>
             </TouchableOpacity>
         </View>

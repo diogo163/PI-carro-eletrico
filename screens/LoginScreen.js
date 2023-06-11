@@ -1,12 +1,38 @@
 import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native'
-import React from 'react'
+import React, {useState} from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import {ArrowLeftIcon} from 'react-native-heroicons/solid'
 import { themeColors } from '../theme'
 import { useNavigation } from '@react-navigation/native'
+import { getAuth,signInWithEmailAndPassword} from 'firebase/auth'
+
 
 export default function LoginScreen() {
+
+
+  const auth = getAuth();
+
   const navigation = useNavigation();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [validationMessage,setvalidationMessage] = useState('');
+  
+  async function login() {
+    if (email === '' || password === '') {
+      setvalidationMessage('required filled missing')
+      return;
+    }
+
+    try {
+      await signInWithEmailAndPassword(auth,email, password);
+    } catch (error) {
+     setvalidationMessage(error.message);
+    }
+  }
+
+
+
+
   return (
     <View className="flex-1 bg-white" style={{backgroundColor: themeColors.bg}}>
       <SafeAreaView  className="flex ">
@@ -30,19 +56,24 @@ export default function LoginScreen() {
             <Text className="text-gray-700 ml-4">RA</Text>
             <TextInput 
               className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
-              placeholder="Digite seu RA"
+              placeholder="Digite seu email da Mauá"
+              value = {email}
+              onChangeText = {(text) => setEmail(text)}
             />
             <Text className="text-gray-700 ml-4">Senha</Text>
             <TextInput 
               className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-7"
               secureTextEntry
               placeholder='Digite sua senha' 
+              value={password}
+              onChangeText = {(text) => setPassword(text)}
             />
             <TouchableOpacity className="flex items-end">
               <Text className="text-gray-700 mb-5">Esqueceu a senha?</Text>
             </TouchableOpacity>
             
-            <TouchableOpacity onPress={()=> navigation.navigate('Home')}
+            <Text className="mt-2 text-red-500" >{validationMessage}</Text>
+            <TouchableOpacity onPress={login}  //onPress={()=> navigation.navigate('Home')}
               className="py-3 bg-yellow-400 rounded-xl">
                 <Text 
                     className="text-xl font-bold text-center text-gray-700"
