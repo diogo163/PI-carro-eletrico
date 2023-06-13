@@ -19,18 +19,17 @@ export default function LoginScreen() {
   
   async function login() {
     if (email === '' || password === '') {
-      setvalidationMessage('required filled missing')
+      setvalidationMessage('Preencha os campos faltantes.')
       return;
     }
 
     try {
       await signInWithEmailAndPassword(auth,email, password);
+      navigation.navigate('Home');
     } catch (error) {
-     setvalidationMessage(error.message);
+     setvalidationMessage('E-mail ou senha inválidos.');
     }
   }
-
-
 
 
   return (

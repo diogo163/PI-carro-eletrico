@@ -37,7 +37,7 @@ export default function ChargerScreen() {
             <Text className="font-semibold text-white mt-0.5 ml-12"> Localização: Bloco K            <Text className="font-semibold text-red-300 mt-0.5 ml-12"> Status: Ocupado</Text>
 </Text>
             <TouchableOpacity
-                    className="py-3 bg-yellow-400 mx-7 rounded-xl mt-12">
+                    className="py-3 bg-yellow-400 mx-7 rounded-xl mt-12" onPress={()=> navigation.navigate('Schedule')}>
                         <Text 
                             className="text-xl font-bold text-center text-gray-700"
                         >

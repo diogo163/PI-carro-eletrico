@@ -23,13 +23,13 @@ export default function SignUpScreen() {
     
     async function createAccount() {
         email === '' || password === '' 
-        ? setValidationMessage('required filled missing')
+        ? setValidationMessage('Preencha os campos faltantes.')
         : ''
         try {
           await createUserWithEmailAndPassword(auth, email, password);
         //   navigation.navigate('Sign In');
         } catch (error) {
-          setValidationMessage(error.message);
+          setValidationMessage('Este e-mail já está em uso.');
         }
       }
 
@@ -104,9 +104,9 @@ export default function SignUpScreen() {
                 </Text>
             </TouchableOpacity>
         </View>
+        <Text className="mt-3 text-red-500">{validationMessage}</Text>
         <View className="flex-row justify-center mt-7">
             <Text className="text-gray-500 font-semibold">Já tem uma conta?</Text>
-            <Text className="mt-2 text-red-500">{validationMessage}</Text>
             <TouchableOpacity  onPress={()=> navigation.navigate('Login')}
             >
                 <Text className="font-semibold text-yellow-500"> Login</Text>
