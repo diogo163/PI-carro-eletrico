@@ -44,11 +44,7 @@ export default function ChargerScreen() {
                             Agendar
                         </Text>
                 </TouchableOpacity>
-
-
-
       </SafeAreaView>
-    </View>
-    
+    </View>    
   )
 }

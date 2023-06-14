@@ -12,7 +12,7 @@ export default function SignUpScreen() {
     const navigation = useNavigation();
 
     const auth = getAuth();
-    const cars = ["A", "B", "C", "D","E"]
+    const cars = ["JAC E-JS1", "Renault Kwid E-Tech", "Caoa Chery iCar", "Peugeot e-208 GT","Renault Zoe"]
 
     const [email,setEmail]=useState('')
     const [password,setPassword]=useState('')
@@ -22,17 +22,29 @@ export default function SignUpScreen() {
 
     
     async function createAccount() {
-        email === '' || password === '' 
-        ? setValidationMessage('Preencha os campos faltantes.')
-        : ''
+        if (email === '' || password === '') {
+          setValidationMessage('Preencha os campos faltantes.');
+          return;
+        }
+      
+        if (!email.endsWith('@maua.br')) {
+          setValidationMessage('É preciso utilizar seu e-mail da Mauá');
+          return;
+        }
+
+        if (placa.length !== 8) {
+            setValidationMessage('Digite uma placa válida com 8 dígitos.');
+            return;
+          }
+      
         try {
-          await createUserWithEmailAndPassword(auth, email, password);
-        //   navigation.navigate('Sign In');
+          await createUserWithEmailAndPassword(auth, email, password),setValidationMessage('Cadastro concluido');
         } catch (error) {
           setValidationMessage('Este e-mail já está em uso.');
         }
       }
 
+      
 
   return (
     <View className="flex-1 bg-white" style={{backgroundColor: themeColors.bg}}>

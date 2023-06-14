@@ -67,9 +67,6 @@ export default function LoginScreen() {
               value={password}
               onChangeText = {(text) => setPassword(text)}
             />
-            <TouchableOpacity className="flex items-end">
-              <Text className="text-gray-700 mb-5">Esqueceu a senha?</Text>
-            </TouchableOpacity>
             
             <Text className="mt-2 text-red-500" >{validationMessage}</Text>
             <TouchableOpacity onPress={login}  //onPress={()=> navigation.navigate('Home')}

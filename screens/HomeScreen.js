@@ -9,41 +9,51 @@ export default function HomeScreen() {
   return (
     <View className="flex-1 bg-white" style={{backgroundColor: themeColors.bg}}>
       <SafeAreaView  className="flex">
-        <View className="flex-row justify-start ml-4 mt-3">
-        <TouchableOpacity onPress={()=> navigation.navigate('Home')}>
-          <Image source={require('../assets/icons/logo_maua.png')} 
-          style={{width: 25, height: 25}} />
+        <View className="flex-row justify-center mt-3">
+        <TouchableOpacity>
+          <Image source={require('../assets/icons/logo_maua.png')} style={{ width: 40, height: 40 }} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={()=> navigation.navigate('Home')}>
-            <Text className="font-semibold text-white mt-0.5 ml-1"> SMART CHARGE</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={()=> navigation.navigate('Car')}>
-            <Image source={require('../assets/icons/carro2.png')} 
-            style={{width: 35, height: 35,marginLeft: 100, marginTop:-3}} />
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={()=> navigation.navigate('Profile')}>
-            <Image source={require('../assets/icons/perfil1.png')} 
-            style={{width: 28, height: 28,marginLeft: 30, marginTop:-3}} />
+          <TouchableOpacity>
+            <Text style={{ fontWeight: 'bold', color: 'white', marginTop: 5, marginLeft: 7, fontSize: 20 }}>
+              SMART CHARGE
+            </Text>
           </TouchableOpacity>
         </View>   
           
-        <Text className="font-semibold text-white mt-7 ml-12"> Carregador 1</Text>
-        <TouchableOpacity onPress={()=> navigation.navigate('Charger')}>
-          <View className="flex-row justify-center">
-                <Image source={require("../assets/images/carregador.jpg")}
-                    style={{width: 300, height: 250, borderRadius:15, marginTop:10}} />
+        <TouchableOpacity>
+          <View className="flex-row justify-center mr-9 mt-6">
+                <Image source={require("../assets/images/undraw_Completed_03xt-PhotoRoom.png-PhotoRoom.png")}
+                    style={{width: 300, height: 300, borderRadius:15, marginTop:10}} />
             </View>
-            </TouchableOpacity>
+        </TouchableOpacity>
 
-        <Text className="font-semibold text-white mt-9 ml-12"> Carregador 2</Text>
-        <TouchableOpacity onPress={()=> navigation.navigate('Charger')}>
-          <View className="flex-row justify-center">
-                <Image source={require("../assets/images/carregador.jpg")}
-                    style={{width: 300, height: 250, borderRadius:15, marginTop:10}} />
-            </View>
-            </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Charger')} style={{ marginHorizontal: 20, marginTop: 40 }}>
+          <View className="py-3 bg-yellow-400 rounded-xl">
+            <Text className="text-xl font-bold text-center text-gray-700">
+              Agendar carregamento
+            </Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigation.navigate('Car')} style={{ marginHorizontal: 20, marginTop: 40 }}>
+          <View className="py-3 bg-yellow-400 rounded-xl">
+            <Text className="text-xl font-bold text-center text-gray-700">
+              Verificar estado de carregamento
+            </Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={{ marginHorizontal: 20, marginTop: 40 }}>
+          <View className="py-3 bg-yellow-400 rounded-xl">
+            <Text className="text-xl font-bold text-center text-gray-700">
+              Editar Informações
+            </Text>
+          </View>
+        </TouchableOpacity>
+  
+
+
+
       </SafeAreaView>
     </View>    
   )

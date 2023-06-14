@@ -8,17 +8,36 @@ import {
   Text,
   Dimensions,
   TouchableOpacity,
+  ScrollView
 } from 'react-native';
 import moment from 'moment';
 import Swiper from 'react-native-swiper';
+import 'moment/locale/pt-br'
+import { Avatar, Card, IconButton } from 'react-native-paper';
+import {ArrowLeftIcon} from 'react-native-heroicons/solid'
+import { Alert } from 'react-native';
 
+
+moment.locale('pt-br')
 const { width } = Dimensions.get('window');
 
+const handleAgendarPress = () => {
+  Alert.alert('Agendamento concluído');
+};
+
 export default function ScheduleScreen() {
+
+  const [selectedCard, setSelectedCard] = useState(null);
+
+  const handleCardPress = (card) => {
+    setSelectedCard(card);
+  };
+
   const navigation = useNavigation();  
   const swiper = useRef();
   const [value, setValue] = useState(new Date());
   const [week, setWeek] = useState(0);
+
 
   const weeks = React.useMemo(() => {
     const start = moment().add(week, 'weeks').startOf('week');
@@ -39,6 +58,8 @@ export default function ScheduleScreen() {
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <View style={styles.header}>
+        
+        <TouchableOpacity onPress={()=>navigation.goBack()}><ArrowLeftIcon style={{marginTop:15}} size="20" color="black"/></TouchableOpacity>
           <Text style={styles.title}>Calendário</Text>
         </View>
 
@@ -56,7 +77,7 @@ export default function ScheduleScreen() {
                 const newIndex = ind - 1;
                 const newWeek = week + newIndex;
                 setWeek(newWeek);
-                setValue(moment(value).add(newIndex, 'semana').toDate());
+                setValue(moment(value).add(newIndex, 'week').toDate());
                 swiper.current.scrollTo(1, false);
               }, 100);
             }}>
@@ -103,21 +124,94 @@ export default function ScheduleScreen() {
         </View>
 
         <View style={{ flex: 1, paddingHorizontal: 16, paddingVertical: 24 }}>
-          <Text style={styles.subtitle}>{value.toDateString()}</Text>
-          <View style={styles.placeholder}>
-            <View style={styles.placeholderInset}>
-              {/* Replace with your content */}
-            </View>
-          </View>
-        </View>
+          <Text style={styles.subtitle}>{value.toLocaleDateString('pt-br')}</Text>
+          
+            
+      <ScrollView contentContainerStyle={styles.kk}>
+      <TouchableWithoutFeedback onPress={() => handleCardPress(1)}>
+      <Card style={[styles.card, selectedCard === 1 && styles.selectedCard]}>
+        <Card.Content>
+          <Card.Title
+            title="Selecionar horário"
+            subtitle="8:00"
+          />
+        </Card.Content>
+      </Card>
+      </TouchableWithoutFeedback>
+
+      <TouchableWithoutFeedback onPress={() => handleCardPress(2)}>
+      <Card style={[styles.card, selectedCard === 2 && styles.selectedCard]}>
+        <Card.Content>
+          <Card.Title
+            title="Selecionar horário"
+            subtitle="10:00"
+          />
+        </Card.Content>
+      </Card>
+      </TouchableWithoutFeedback>
+
+      <TouchableWithoutFeedback onPress={() => handleCardPress(3)}>
+      <Card style={[styles.card, selectedCard === 3 && styles.selectedCard]}>
+        <Card.Content>
+          <Card.Title
+            title="Selecionar horário"
+            subtitle="12:00"
+          />
+        </Card.Content>
+      </Card>
+      </TouchableWithoutFeedback>
+
+      <TouchableWithoutFeedback onPress={() => handleCardPress(4)}>
+      <Card style={[styles.card, selectedCard === 4 && styles.selectedCard]}>
+        <Card.Content>
+          <Card.Title
+            title="Selecionar horário"
+            subtitle="14:00"
+          />
+        </Card.Content>
+      </Card>
+      </TouchableWithoutFeedback>
+
+      <TouchableWithoutFeedback onPress={() => handleCardPress(5)}>
+      <Card style={[styles.card, selectedCard === 5 && styles.selectedCard]}>
+        <Card.Content>
+          <Card.Title
+            title="Selecionar horário"
+            subtitle="16:00"
+          />
+        </Card.Content>
+      </Card>
+      </TouchableWithoutFeedback>
+
+      <TouchableWithoutFeedback onPress={() => handleCardPress(6)}>
+      <Card style={[styles.card, selectedCard === 6 && styles.selectedCard]}>
+        <Card.Content>
+          <Card.Title
+            title="Selecionar horário"
+            subtitle="18:00"
+          />
+        </Card.Content>
+      </Card>
+      </TouchableWithoutFeedback>
+
+      <TouchableWithoutFeedback onPress={() => handleCardPress(7)}>
+      <Card style={[styles.card, selectedCard === 7 && styles.selectedCard]}>
+        <Card.Content>
+          <Card.Title
+            title="Selecionar horário"
+            subtitle="20:00"
+          />
+        </Card.Content>
+      </Card>
+      </TouchableWithoutFeedback>
+
+    </ScrollView>
+    </View>
 
         <View style={styles.footer}>
-          <TouchableOpacity
-            onPress={() => {
-              // handle onPress
-            }}>
+        <TouchableOpacity onPress={handleAgendarPress}>
             <View style={styles.btn}>
-              <Text style={styles.btnText}>Schedule</Text>
+              <Text style={styles.btnText}>Agendar</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -126,12 +220,15 @@ export default function ScheduleScreen() {
   );
 }
 
+
+
 const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: '700',
     color: '#1d1d1d',
     marginBottom: 12,
+    alignSelf:'flex-end',
   },
   placeholder: {
     flexGrow: 1,
@@ -223,5 +320,20 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '600',
     color: '#111',
+  },
+  cardTitle: {
+    borderWidth: 1,
+    borderColor: '#000',
+    borderRadius: 4,
+    padding: 10,
+  },
+  card: {
+    marginBottom: 16,
+  },
+  kk:{
+    padding:12,
+  },
+  selectedCard: {
+    backgroundColor: '#e5e5e5',
   },
 });
