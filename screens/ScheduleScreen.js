@@ -39,7 +39,7 @@ export default function ScheduleScreen() {
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.title}>Your Schedule</Text>
+          <Text style={styles.title}>Calendário</Text>
         </View>
 
         <View style={styles.picker}>
@@ -56,7 +56,7 @@ export default function ScheduleScreen() {
                 const newIndex = ind - 1;
                 const newWeek = week + newIndex;
                 setWeek(newWeek);
-                setValue(moment(value).add(newIndex, 'week').toDate());
+                setValue(moment(value).add(newIndex, 'semana').toDate());
                 swiper.current.scrollTo(1, false);
               }, 100);
             }}>

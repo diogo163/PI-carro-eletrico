@@ -1,50 +1,165 @@
-import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native'
-import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { themeColors } from '../theme'
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+  TextInput,
+  Modal,
+} from "react-native";
+import React, { useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import * as ImagePicker from "expo-image-picker";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from '@react-navigation/native'
 
 export default function ProfileScreen() {
+
   const navigation = useNavigation();
+
+  const [email, setEmail] = useState("22.01750-0@maua.br");
+  const [placa, setPlaca] = useState("ABCDEFGH");
+  const [password, setPassword] = useState("diogo123");
+
+
   return (
-    <View className="flex-1 bg-white" style={{backgroundColor: themeColors.bg}}>
-      <SafeAreaView  className="flex">
-        <View className="flex-row justify-start ml-4 mt-3">
-        <TouchableOpacity onPress={()=> navigation.navigate('Home')}>
-          <Image source={require('../assets/icons/logo_maua.png')} 
-          style={{width: 25, height: 25}} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=> navigation.navigate('Home')}>
-            <Text className="font-semibold text-white mt-0.5 ml-1"> SMART CHARGE P</Text>
-          </TouchableOpacity>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: '#5588EC',
+        paddingHorizontal: 22,
+      }}
+    >
+      <View
+        style={{
+          marginHorizontal: 12,
+          flexDirection: "row",
+          justifyContent: "center",
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={{
+            position: "absolute",
+            left: 0,
+          }}
+        >
+          <MaterialIcons
+            name="keyboard-arrow-left"
+            size={24}
+            color={'#000'}
+          />
+        </TouchableOpacity>
 
-          <TouchableOpacity onPress={()=> navigation.navigate('Car')}>
-            <Image source={require('../assets/icons/carro2.png')} 
-            style={{width: 35, height: 35,marginLeft: 100, marginTop:-3}} />
-          </TouchableOpacity>
+        <Text style={{color: '#fff' }}>Editar Usuário</Text>
+      </View>
 
-          <TouchableOpacity onPress={()=> navigation.navigate('Profile')}>
-            <Image source={require('../assets/icons/perfil1.png')} 
-            style={{width: 28, height: 28,marginLeft: 30, marginTop:-3}} />
-          </TouchableOpacity>
-        </View>   
-          
-
-        <TouchableOpacity onPress={()=> navigation.navigate('Charger')}>
-          <View className="flex-row justify-center">
-                <Image source={require("../assets/images/carregador.jpg")}
-                    style={{width: 250, height: 200, borderRadius:15, marginTop:55}} />
+      <ScrollView>     
+        <View>
+          <View
+            style={{
+              flexDirection: "column",
+              marginBottom: 6,
+            }}
+          >
+            <Text style={{color: '#fff', marginTop:35}}>E-mail</Text>
+            <View
+              style={{
+                height: 44,
+                width: "100%",
+                borderColor: '#000',
+                borderWidth: 1,
+                borderRadius: 4,
+                marginVertical: 6,
+                justifyContent: "center",
+                paddingLeft: 8,
+              }}
+            >
+              <TextInput
+                color = '#d3d3d5'
+                value={email}
+                onChangeText={(value) => setEmail(value)}
+                editable={true}
+              />
             </View>
-            </TouchableOpacity>
+          </View>
 
-
-        <TouchableOpacity onPress={()=> navigation.navigate('Charger')}>
-          <View className="flex-row justify-center">
-                <Image source={require("../assets/images/carregador.jpg")}
-                    style={{width: 250, height: 200, borderRadius:15, marginTop:55}} />
+          <View
+            style={{
+              flexDirection: "column",
+              marginBottom: 6,
+            }}
+          >
+            <Text style={{ color: '#fff' }}>Placa</Text>
+            <View
+              style={{
+                height: 44,
+                width: "100%",
+                borderColor: '#000',
+                borderWidth: 1,
+                borderRadius: 4,
+                marginVertical: 6,
+                justifyContent: "center",
+                paddingLeft: 8,
+              }}
+            >
+              <TextInput
+                color = '#d3d3d5'
+                value={placa}
+                onChangeText={(value) => setPlaca(value)}
+                editable={true}
+              />
             </View>
-            </TouchableOpacity>
-      </SafeAreaView>
-    </View>    
-  )
-}
+          </View>
+
+          <View
+            style={{
+              flexDirection: "column",
+              marginBottom: 6,
+            }}
+          >
+            <Text style={{ color: '#fff' }}>Senha</Text>
+            <View
+              style={{
+                height: 44,
+                width: "100%",
+                borderColor: '#000',
+                borderWidth: 1,
+                borderRadius: 4,
+                marginVertical: 6,
+                justifyContent: "center",
+                paddingLeft: 8,
+              }}
+            >
+              <TextInput
+                value={password}
+                onChangeText={(value) => setPassword(value)}
+                editable={true}
+                secureTextEntry
+              />
+            </View>
+          </View>
+        </View>
+
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#ffbf00',
+            height: 44,
+            borderRadius: 6,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Text
+            style={{
+              color: '#000',
+            }}
+          >
+            Salvar Mudanças
+          </Text>
+        </TouchableOpacity>
+
+      </ScrollView>
+    </SafeAreaView>
+  );
+};

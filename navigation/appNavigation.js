@@ -10,6 +10,7 @@ import ChargerScreen from '../screens/ChargerScreen';
 import CarScreen from '../screens/CarScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import ScheduleScreen from '../screens/ScheduleScreen';
+// import TesteScreen from '../screens/TesteScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -27,6 +28,7 @@ export default function AppNavigation() {
         <Stack.Screen name="Car" options={{headerShown: false}} component={CarScreen} />
         <Stack.Screen name="Profile" options={{headerShown: false}} component={ProfileScreen} />
         <Stack.Screen name="Schedule" options={{headerShown: false}} component={ScheduleScreen} />
+        {/* <Stack.Screen name="Teste" options={{headerShown: false}} component={TesteScreen} />         */}
       </Stack.Navigator>
     </NavigationContainer>
   )
